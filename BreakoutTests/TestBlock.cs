@@ -39,7 +39,7 @@ public class TestsBlock
     }
 
     [Test]
-    //doing all test in 1 function, as it becomes problematic as many windows are opened resulting in a crash
+    //Testing the hit function of the block. It is hit 3 times and should be alive the first to and die after the third.
     public void test1()
     {
         bool isDead = block.Hit();

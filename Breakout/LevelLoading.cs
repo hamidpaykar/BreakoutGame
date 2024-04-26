@@ -191,6 +191,6 @@ public class Level
         }
     }
     
-    //Decrements health by 1 and returns false if Block has positive healt
+    //Decrements health by 1 and returns false if Block has positive health
 
 }
