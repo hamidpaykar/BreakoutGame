@@ -9,10 +9,13 @@ using DIKUArcade.Input;
 using DIKUArcade.Physics;
 using System;
 using Breakout.Blocks;
+using Breakout.LoadLevel;
 namespace Breakout.States {
     public class GameRunning : IGameState {
         private static GameRunning instance;
         private Block b;
+        private Level level;
+
         public static GameRunning GetInstance() {
             return instance ?? (instance = new GameRunning());
         }
@@ -27,7 +30,9 @@ namespace Breakout.States {
 
         private void InitializeGame() {
             b = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 5, 5);
+                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 3, 3);
+            level = new Level("d", "level3.txt");
+            
 
     }
 
@@ -37,6 +42,7 @@ namespace Breakout.States {
 
          public void RenderState() {
             b.RenderEntity();
+            level.blocks.RenderEntities();
         }
 
         public void ResetState(){
