@@ -8,9 +8,11 @@ using System.Collections.Generic;
 using DIKUArcade.Input;
 using DIKUArcade.Physics;
 using System;
+using Breakout.Blocks;
 namespace Breakout.States {
     public class GameRunning : IGameState {
         private static GameRunning instance;
+        private Block b;
         public static GameRunning GetInstance() {
             return instance ?? (instance = new GameRunning());
         }
@@ -24,19 +26,24 @@ namespace Breakout.States {
         }
 
         private void InitializeGame() {
+            b = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 5, 5);
+
     }
 
-         public void UpdateState() {            
+         public void UpdateState() {   
+
         }
 
          public void RenderState() {
+            b.RenderEntity();
         }
 
         public void ResetState(){
 
         }
 
-         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
+        public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
             /* switch (action) {
                 case KeyboardAction.KeyPress:
                     

@@ -1,7 +1,7 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-namespace Breakout.Block;
+namespace Breakout.Blocks;
 public class Block : Entity
 {
     private int health;

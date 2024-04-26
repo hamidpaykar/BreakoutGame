@@ -16,6 +16,7 @@ namespace Breakout
         };
 
         var game = new Game(windowArgs);
+        game.Run();
         }
     }
 }

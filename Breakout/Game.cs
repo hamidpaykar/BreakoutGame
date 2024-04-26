@@ -23,19 +23,24 @@ public class Game : DIKUGame, IGameEventProcessor {
         window.SetKeyEventHandler(KeyHandler);
     }
 
-    private void KeyHandler(KeyboardAction action, KeyboardKey key) {
-        Console.WriteLine("");
-    }
+   public void KeyHandler(KeyboardAction action, KeyboardKey key) {
+             stateMachine.ActiveState.HandleKeyEvent(action, key);
+        }
 
-    public override void Render() { 
-                Console.WriteLine("");        
-    }
+        public override void Update() {
+            stateMachine.ActiveState.UpdateState();
+            BreakoutBus.GetBus().ProcessEventsSequentially();
+        }
 
-    public override void Update() {
-        Console.WriteLine("");
-     }
-    public void ProcessEvent(GameEvent gameEvent){
+        public override void Render() {
+            stateMachine.ActiveState.RenderState();
+        }
 
-    }
+        public void ProcessEvent(GameEvent gameEvent) {
+            if(gameEvent.Message=="CLOSE_WINDOW"){
+                window.CloseWindow();
+            }
+            stateMachine.ProcessEvent(gameEvent);
+        }
 }
 }
