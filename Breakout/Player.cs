@@ -33,7 +33,7 @@ namespace Breakout
             // Move the shape based on the current direction
             shape.Move();
 
-            Console.WriteLine($"Before Adjustment - X: {shape.Position.X}, Width: {shape.Extent.X}, Direction: {shape.Direction.X}");
+            //Console.WriteLine($"Before Adjustment - X: {shape.Position.X}, Width: {shape.Extent.X}, Direction: {shape.Direction.X}");
 
             // Check if the player is beyond the right boundary
             if (shape.Position.X < 0.0f)
@@ -45,7 +45,7 @@ namespace Breakout
                 shape.Position.X = 1.0f - shape.Extent.X;
             }
 
-            Console.WriteLine($"After Adjustment - X: {shape.Position.X}, Width: {shape.Extent.X}, Direction: {shape.Direction.X}");
+            //Console.WriteLine($"After Adjustment - X: {shape.Position.X}, Width: {shape.Extent.X}, Direction: {shape.Direction.X}");
         }
 
 
@@ -69,7 +69,7 @@ namespace Breakout
         private void UpdateDirection()
         {
             shape.Direction.X = moveRight + moveLeft;
-            Console.WriteLine($"Updated Direction: {shape.Direction.X}");  // Debug output
+            //Console.WriteLine($"Updated Direction: {shape.Direction.X}");  // Debug output
         }
     }
 }

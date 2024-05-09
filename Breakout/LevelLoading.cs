@@ -23,6 +23,10 @@ public class Level
         get {return name;}
     }
 
+    public string FileName{
+        get {return fileName;}
+    }
+
     public Level(string name, string fileName)
     {
         //this.name = name;
@@ -30,15 +34,6 @@ public class Level
         this.blocks = new EntityContainer<Block>(25*12);
         legend = getLegend(fileName, "Legend");
         getMeta(fileName, "Meta");
-        Console.WriteLine("Dictionary Contents:");
-        foreach (var kvp in legend)
-        {
-            Console.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
-        }
-        Console.WriteLine(this.name);
-        Console.WriteLine(time);
-        Console.WriteLine(powerUp);
-        Console.WriteLine(unbreakable);
         getFormation(fileName, "Map");
 
     }
@@ -64,9 +59,6 @@ public class Level
                 if(flag && line.Contains(")")){
                     legend.Add(line[0], line.Substring(3));
                 }
-                
-                //write the line to console window
-                Console.WriteLine(line);
                 //Read the next line
                 line = sr.ReadLine();
             }
@@ -76,6 +68,7 @@ public class Level
         catch(Exception e)
         {
             Console.WriteLine("Exception: " + e.Message);
+            this.fileName = "";
         }
         finally
         {
@@ -122,7 +115,6 @@ public class Level
                 }
                 
                 //write the line to console window
-                Console.WriteLine(line);
                 //Read the next line
                 line = sr.ReadLine();
             }
@@ -143,8 +135,12 @@ public class Level
         String line;
         string content = "";
         int row = 0;
-        float width = 0.08F;
-        float height = 0.04F;
+        float totalWidth = 12.0F;
+        float totalHeight = 25.0F;
+        //float width = 0.08F;
+        //float height = 0.04F;
+        float width = 1.0F / totalWidth;
+        float height = 1.0F /totalHeight;
         Dictionary<char, string> legend =  
                        new Dictionary<char, string>(); 
         try
@@ -164,8 +160,8 @@ public class Level
                     for (int i = 0; i < line.Length; i++)
                     {
                         if (line[i]!='-'){
-                            float y = ((25-row)*height)-height*2;
-                            float x = ((12-i)*width) - width*2;
+                            float y = ((totalHeight-row)*height)-height;
+                            float x = ((totalWidth-i)*width) - width;
                             this.blocks.AddEntity(new Block(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),
                 new Image(Path.Combine("Assets", "Images", this.legend[line[i]])), 3, 3));
                         }
@@ -174,23 +170,20 @@ public class Level
                 }
                 
                 //write the line to console window
-                Console.WriteLine(line);
                 //Read the next line
                 line = sr.ReadLine();
             }
             //close the file
             sr.Close();
         }
-        /* catch(Exception e)
+        catch(Exception e)
         {
             Console.WriteLine("Exception: " + e.Message);
-        } */
+        }
         finally
         {
             Console.WriteLine("Executing finally block.");
         }
     }
-    
-    //Decrements health by 1 and returns false if Block has positive health
 
 }

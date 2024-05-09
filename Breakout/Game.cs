@@ -36,8 +36,26 @@ namespace Breakout
                 new DynamicShape(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Vec2F(0.3f, 0.06f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))
             );
+        }
+
+        public Game(WindowArgs windowArgs, bool initEventBus) : base(windowArgs)
+        {
+            stateMachine = new StateMachine();
+            stateMachine.SwitchState(GameStateType.GameRunning);
+            if (initEventBus){
+            BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent });
+            }
+            BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
+            BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
+            BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
+            window.SetKeyEventHandler(KeyHandler);
 
 
+            // Initialize the player
+            player = new Player(
+                new DynamicShape(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Vec2F(0.3f, 0.06f)),
+                new Image(Path.Combine("Assets", "Images", "Player.png"))
+            );
         }
 
         public void KeyHandler(KeyboardAction action, KeyboardKey key)

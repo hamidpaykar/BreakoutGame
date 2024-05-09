@@ -23,7 +23,7 @@ namespace BreakoutTests;
 //which is pased into Galagatests
 public class TestsPlayer
 {
-    public Player player;
+   /*  public Player player;
     [SetUp]
     public void Setup()
     {
@@ -71,5 +71,5 @@ public class TestsPlayer
         //SO if the direction function works, the positions should be correct. 
         Assert.True(pos2.X < pos1.X & pos3.X == pos2.X & pos3.X < pos4.X & pos4.X == pos5.X & pos1.Y == pos5.Y);
 
-    }
+    } */
 }

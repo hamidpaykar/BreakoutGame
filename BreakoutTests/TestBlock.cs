@@ -22,10 +22,12 @@ namespace BreakoutTest;
 
 //for the test to work a the Asset folder is copied into GalagaTest and copied again into a folder Galaga
 //which is pased into Galagatests
+
+[TestFixture]
 public class TestsBlock
 {
     public Block block;
-    [SetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
         var windowArgs = new WindowArgs()
@@ -34,6 +36,19 @@ public class TestsBlock
         };
 
         var game = new Game(windowArgs);
+        block = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 3, 3);
+    }
+
+    [SetUp]
+    public void Setup2()
+    {
+        var windowArgs = new WindowArgs()
+        {
+            Title = "Galaga v0.1"
+        };
+
+        var game = new Game(windowArgs, false);
         block = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "blue-block.png")), 3, 3);
     }
@@ -51,5 +66,16 @@ public class TestsBlock
         isDead = block.Hit();
         Assert.IsTrue(isDead);
     }
-    
+    [Test]
+    public void test2()
+    {
+        bool isDead = block.Hit();
+        Assert.IsFalse(isDead);
+
+        isDead = block.Hit();
+        Assert.IsFalse(isDead);
+
+        isDead = block.Hit();
+        Assert.IsTrue(isDead);
+    }
 }

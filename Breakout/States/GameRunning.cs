@@ -10,11 +10,15 @@ using DIKUArcade.Physics;
 using System;
 using Breakout.Blocks;
 using Breakout.LoadLevel;
+using Breakout.Balls;
+
 namespace Breakout.States {
     public class GameRunning : IGameState {
         private static GameRunning instance;
         private Block b;
-        private Level level;
+        private Level currentlevel;
+        private List<Level> levels = new List<Level>();
+        private Ball ball;
 
         public static GameRunning GetInstance() {
             return instance ?? (instance = new GameRunning());
@@ -29,24 +33,43 @@ namespace Breakout.States {
         }
 
         private void InitializeGame() {
-            b = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 3, 3);
-            level = new Level("d", "level3.txt");
-            
-
-    }
-
-         public void UpdateState() {   
+            levels.Add(new Level("1", "central-mass.txt"));
+            levels.Add(new Level("2", "columns.txt"));
+            levels.Add(new Level("3", "level1.txt"));
+            levels.Add(new Level("4", "level2.txt"));
+            levels.Add(new Level("5", "level3.txt"));
+            levels.Add(new Level("6", "wall.txt"));
+            currentlevel = levels[0];
+            //ball = new Ball(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Image(Path.Combine("Assets", "Images", "ball.png")));
+            ball = new Ball(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Image(Path.Combine("Assets", "Images", "ball.png")));
 
         }
 
+        public void UpdateState() {   
+            ball.firstPush();
+        }
+
          public void RenderState() {
-            b.RenderEntity();
-            level.blocks.RenderEntities();
+            ball.RenderEntity();
+            currentlevel.blocks.RenderEntities();
         }
 
         public void ResetState(){
 
+        }
+
+        public void CheckForCollision(){
+            if(isWallCollision()){
+                
+            }
+        }
+
+        public bool isWallCollision(){
+            bool isCollision = false;
+            if(ball.Shape.Position.X <=0 || ball.Shape.Position.Y >= 1){
+                isCollision = true;
+            }
+            return isCollision;
         }
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
