@@ -24,7 +24,7 @@ namespace BreakoutTest;
 //which is pased into Galagatests
 public class TestsLevelLoader
 {
-    /* [SetUp]
+    [SetUp]
     public void Setup()
     {
         var windowArgs = new WindowArgs()
@@ -45,7 +45,19 @@ public class TestsLevelLoader
     [Test]
     public void DoesNotLoadLevel()
     {
-        Level level = new Level("d", "doesNotExist.txt");
+        Level level = new Level("d", "devel3.txt");
         Assert.AreEqual("", level.FileName);
-    } */
+        
+    }
+    [Test]
+    public void CorrectAmountOfBlocks()
+    {
+        Level level = new Level("d", "central-mass.txt");
+        int amount = 0;
+        level.blocks.Iterate((Block block) =>
+            {
+                amount++;
+            });
+        Assert.AreEqual(72, amount);
+    }
 }

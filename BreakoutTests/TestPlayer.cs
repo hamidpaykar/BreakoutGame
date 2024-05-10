@@ -1,3 +1,4 @@
+
 using NUnit.Framework;
 using System;
 using Breakout;
@@ -23,7 +24,7 @@ namespace BreakoutTests;
 //which is pased into Galagatests
 public class TestsPlayer
 {
-   /*  public Player player;
+    public Player player;
     [SetUp]
     public void Setup()
     {
@@ -32,10 +33,10 @@ public class TestsPlayer
             Title = "Breakout v0.1"
         };
 
-        var game = new Game(windowArgs);
+        var game = new Game(windowArgs, false);
         player = new Player(
             new DynamicShape(new Vec2F(0.1f, 0.1f), new Vec2F(0.1f, 0.1f)),
-            new Image("Breakout\\Assets\\Images\\Player.png"));
+            new Image(Path.Combine("Assets", "Images", "player.png")));
     }
 
     [Test]
@@ -71,5 +72,5 @@ public class TestsPlayer
         //SO if the direction function works, the positions should be correct. 
         Assert.True(pos2.X < pos1.X & pos3.X == pos2.X & pos3.X < pos4.X & pos4.X == pos5.X & pos1.Y == pos5.Y);
 
-    } */
+    }
 }

@@ -66,16 +66,4 @@ public class TestsBlock
         isDead = block.Hit();
         Assert.IsTrue(isDead);
     }
-    [Test]
-    public void test2()
-    {
-        bool isDead = block.Hit();
-        Assert.IsFalse(isDead);
-
-        isDead = block.Hit();
-        Assert.IsFalse(isDead);
-
-        isDead = block.Hit();
-        Assert.IsTrue(isDead);
-    }
 }

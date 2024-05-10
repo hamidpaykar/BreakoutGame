@@ -1,3 +1,5 @@
+using Breakout.States;
+
 using System.Collections.Generic;
 using DIKUArcade;
 using DIKUArcade.Entities;
@@ -7,9 +9,7 @@ using DIKUArcade.Input;
 using DIKUArcade.Graphics;
 using System;
 using DIKUArcade.Math;
-using Breakout.States;
 using System.IO;
-using Breakout;
 using DIKUArcade.Physics;
 
 
@@ -20,10 +20,17 @@ namespace Breakout
         private StateMachine stateMachine;
         private Player player;
 
+
         public Game(WindowArgs windowArgs) : base(windowArgs)
         {
+            
             stateMachine = new StateMachine();
-            stateMachine.SwitchState(GameStateType.GameRunning);
+            stateMachine.SwitchState(GameStateType.MainMenu);
+
+
+
+
+
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent });
             BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
@@ -31,11 +38,17 @@ namespace Breakout
             window.SetKeyEventHandler(KeyHandler);
 
 
+
+
+
             // Initialize the player
             player = new Player(
                 new DynamicShape(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Vec2F(0.3f, 0.06f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))
             );
+
+
+
         }
 
         public Game(WindowArgs windowArgs, bool initEventBus) : base(windowArgs)
@@ -60,6 +73,11 @@ namespace Breakout
 
         public void KeyHandler(KeyboardAction action, KeyboardKey key)
         {
+            if (!(stateMachine.ActiveState is MainMenu || stateMachine.ActiveState is GameRunning || stateMachine.ActiveState is GamePaused))
+            {
+                return; // Exit the method if not in an allowed game state
+            }
+
             switch (action)
             {
                 case KeyboardAction.KeyPress:
@@ -92,13 +110,17 @@ namespace Breakout
         {
             stateMachine.ActiveState.UpdateState();
             BreakoutBus.GetBus().ProcessEventsSequentially();
-            //player.Move();
+            player.Move();
         }
 
         public override void Render()
         {
             stateMachine.ActiveState.RenderState();
-            //player.Render();
+            
+            if (stateMachine.ActiveState is GameRunning)
+            {
+                player.Render();
+            }
         }
 
         public void ProcessEvent(GameEvent gameEvent)

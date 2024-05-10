@@ -68,6 +68,10 @@ namespace Breakout.States {
         }
 
         public void CheckForCollision(){
+            if(isBottomCollision()){
+                ball.DeleteEntity();
+                ball = new Ball(new Vec2F(player.Shape.Position.X, 0.1f), new Image(Path.Combine("Assets", "Images", "ball.png")));
+            }
             bool wallCollision = isWallCollision();
             bool blockCollision = false;
             bool paddleCollision = false;
@@ -94,6 +98,7 @@ namespace Breakout.States {
             }
         }
         public Vec2F alterDirection(DynamicShape ball, bool alterX){
+            float normFactor = 100.0f;
             float x;
             float y;
             if(alterX){
@@ -104,17 +109,17 @@ namespace Breakout.States {
                 x = ball.Direction.X;
                 y = ball.Direction.Y *(-1.0f);
             }
-            float noiseXPos = (float)rnd.NextDouble()/100.0f;
-            float noiseYPos = (float)rnd.NextDouble()/100.0f;
-            float noiseXNeg = (float)rnd.NextDouble()/100.0f;
-            float noiseYNeg = (float)rnd.NextDouble()/100.0f;
+            float noiseXPos = (float)rnd.NextDouble()/normFactor;
+            float noiseYPos = (float)rnd.NextDouble()/normFactor;
+            float noiseXNeg = (float)rnd.NextDouble()/normFactor;
+            float noiseYNeg = (float)rnd.NextDouble()/normFactor;
             x += noiseXPos;
             y += noiseYPos;
             x -= noiseXNeg;
             y -= noiseYNeg;
             float vectorLength = getVectorLength(x, y);
-            x = normalizeVectorCoordinate(x, vectorLength)/100.0f;
-            y = normalizeVectorCoordinate(y, vectorLength)/100.0f;
+            x = normalizeVectorCoordinate(x, vectorLength)/normFactor;
+            y = normalizeVectorCoordinate(y, vectorLength)/normFactor;
             return new Vec2F(x, y);
         }
         private float normalizeVectorCoordinate(float x, float vectorLength){
@@ -124,12 +129,15 @@ namespace Breakout.States {
             return (float)Math.Sqrt(Math.Pow(x,2) + Math.Pow(y,2));
         }
 
-        public bool isWallCollision(){
+        private bool isWallCollision(){
             bool isCollision = false;
             if(ball.Shape.Position.X <=0 || ball.Shape.Position.Y >= 1 || ball.Shape.Position.X >= 1){
                 isCollision = true;
             }
             return isCollision;
+        }
+        private bool isBottomCollision(){
+            return (ball.Shape.Position.Y <= 0);
         }
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
@@ -181,6 +189,32 @@ namespace Breakout.States {
                     }
                     break;
             } */
+
+            switch (action)
+            {
+                case KeyboardAction.KeyPress:
+                    switch (key)
+                    {
+                        case KeyboardKey.Left:
+                            player.SetMoveLeft(true);
+                            break;
+                        case KeyboardKey.Right:
+                            player.SetMoveRight(true);
+                            break;
+                    }
+                    break;
+                case KeyboardAction.KeyRelease:
+                    switch (key)
+                    {
+                        case KeyboardKey.Left:
+                            player.SetMoveLeft(false);
+                            break;
+                        case KeyboardKey.Right:
+                            player.SetMoveRight(false);
+                            break;
+                    }
+                    break;
+            }
         }
     }
 }
