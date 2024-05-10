@@ -32,9 +32,7 @@ public class Ball : Entity
         
     }
 
-    public void blockHit(){
 
-    }
 }
     //Decrements health by 1 and returns false if Block has positive health
 
