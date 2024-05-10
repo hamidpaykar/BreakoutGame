@@ -92,13 +92,13 @@ namespace Breakout
         {
             stateMachine.ActiveState.UpdateState();
             BreakoutBus.GetBus().ProcessEventsSequentially();
-            player.Move();
+            //player.Move();
         }
 
         public override void Render()
         {
             stateMachine.ActiveState.RenderState();
-            player.Render();
+            //player.Render();
         }
 
         public void ProcessEvent(GameEvent gameEvent)

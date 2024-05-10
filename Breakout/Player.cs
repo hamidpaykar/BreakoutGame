@@ -13,6 +13,9 @@ namespace Breakout
         const float MOVEMENT_SPEED = 0.01f;
         private Entity entity;
         private DynamicShape shape;
+        public Shape Shape{
+            get { return shape;}
+        }
         public Player(DynamicShape shape, IBaseImage image)
         {
             entity = new Entity(shape, image);

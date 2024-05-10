@@ -133,6 +133,7 @@ public class Level
 
     private void getFormation(string fileName, string tag){
         String line;
+        int currentValue = 0;
         string content = "";
         int row = 0;
         float totalWidth = 12.0F;
@@ -163,7 +164,8 @@ public class Level
                             float y = ((totalHeight-row)*height)-height;
                             float x = ((totalWidth-i)*width) - width;
                             this.blocks.AddEntity(new Block(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),
-                new Image(Path.Combine("Assets", "Images", this.legend[line[i]])), 3, 3));
+                new Image(Path.Combine("Assets", "Images", this.legend[line[i]])), currentValue, 3));
+                currentValue++;
                         }
                     }
                     row++;
