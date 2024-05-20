@@ -162,8 +162,19 @@ public class Level
                         if (line[i]!='-'){
                             float y = ((totalHeight-row)*height)-height;
                             float x = ((totalWidth-i)*width) - width;
-                            this.blocks.AddEntity(new Block(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),
-                new Image(Path.Combine("Assets", "Images", this.legend[line[i]])), 3, 3));
+                            Block newBlock;
+                            if(line[i].ToString()==this.unbreakable){
+                                newBlock = new UnbreakableBlock(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
+
+                            }
+                            else if(line[i].ToString()==this.hardened){
+                                newBlock = new HardenedBlock(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
+                            }
+                            else{
+                                newBlock = new Block(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
+                            }
+                            this.blocks.AddEntity(newBlock);
+
                         }
                     }
                     row++;

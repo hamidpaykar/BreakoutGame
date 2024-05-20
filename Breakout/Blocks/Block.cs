@@ -1,12 +1,16 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using System.IO;
+using System;
+using System.Collections.Generic; 
 namespace Breakout.Blocks;
 public class Block : Entity
 {
-    private int health;
+    protected int health;
     private int value;
     private Vec2F initialPosition;
+    private string fileName;
     public int Health{
         get {return health;}
     }
@@ -16,14 +20,16 @@ public class Block : Entity
         set {this.value=value;}
     }
 
+
     public Vec2F InitialPosition{
         get{return initialPosition;}
     }
-    public Block(DynamicShape shape, IBaseImage image, int value, int health) : base(shape, image)
+    public Block(DynamicShape shape, string fileName, int value, int health) : base(shape, new Image(Path.Combine("Assets", "Images", fileName)))
     {
         this.health = health;
         this.value = value;
-        initialPosition = new Vec2F(Shape.Position.X, Shape.Position.Y);;
+        initialPosition = new Vec2F(Shape.Position.X, Shape.Position.Y);
+        this.fileName = fileName;
     }
     //Decrements health by 1 and returns false if Block has positive health
     public bool Hit(){
