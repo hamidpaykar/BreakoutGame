@@ -19,6 +19,9 @@ public class Ball : Entity
         set{direction=value;
         Di}
     } */
+    public bool isStarted{
+        get { return this.isStarted;}
+    }
 
     public Ball(Vec2F position, IBaseImage image)
         : base(new DynamicShape(position, extent, direction), image)

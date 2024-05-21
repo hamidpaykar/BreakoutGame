@@ -26,11 +26,6 @@ namespace Breakout
             
             stateMachine = new StateMachine();
             stateMachine.SwitchState(GameStateType.MainMenu);
-
-
-
-
-
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent });
             BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
