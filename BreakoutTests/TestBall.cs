@@ -66,7 +66,7 @@ public class TestBall
         ball.firstPush();
         Vec2F positionAfter = ball.Shape.Position
         Assert.AreNotEqual(positionAfter, positionPrevious);
-        Assert.AreEqual(true, ball.isStarted);
+        Assert.AreEqual(true, ball.IsStarted);
         
     }
 }

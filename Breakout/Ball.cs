@@ -19,7 +19,7 @@ public class Ball : Entity
         set{direction=value;
         Di}
     } */
-    public bool isStarted{
+    public bool IsStarted{
         get { return this.isStarted;}
     }
 

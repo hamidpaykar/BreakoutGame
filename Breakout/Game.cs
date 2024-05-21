@@ -37,10 +37,10 @@ namespace Breakout
 
 
             // Initialize the player
-            player = new Player(
+            /* player = new Player(
                 new DynamicShape(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Vec2F(0.3f, 0.06f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))
-            );
+            ); */
 
 
 
@@ -59,18 +59,22 @@ namespace Breakout
             window.SetKeyEventHandler(KeyHandler);
 
 
-            // Initialize the player
+            /* // Initialize the player
             player = new Player(
                 new DynamicShape(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Vec2F(0.3f, 0.06f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))
-            );
-        }
+            );*/
+        } 
 
-        public void KeyHandler(KeyboardAction action, KeyboardKey key)
+        private void KeyHandler(KeyboardAction action, KeyboardKey key)
         {
             if (!(stateMachine.ActiveState is MainMenu || stateMachine.ActiveState is GameRunning || stateMachine.ActiveState is GamePaused))
             {
                 return; // Exit the method if not in an allowed game state
+            }
+
+            else{   
+            stateMachine.ActiveState.HandleKeyEvent(action, key);
             }
 
             switch (action)
@@ -105,7 +109,8 @@ namespace Breakout
         {
             stateMachine.ActiveState.UpdateState();
             BreakoutBus.GetBus().ProcessEventsSequentially();
-            player.Move();
+            //player.Move();
+
         }
 
         public override void Render()
@@ -114,7 +119,7 @@ namespace Breakout
             
             if (stateMachine.ActiveState is GameRunning)
             {
-                player.Render();
+                //player.Render();
             }
         }
 
