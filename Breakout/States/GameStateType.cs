@@ -3,6 +3,9 @@ using System;
 
 namespace Breakout.States
 {
+    /// <summary>
+    /// Stores the different possible states as enums.
+    /// </summary>
     public enum GameStateType
     {
         GameRunning,
@@ -11,6 +14,10 @@ namespace Breakout.States
         GameOver,
         LevelSelector
     }
+
+    /// <summary>
+    /// Translates from enum to string and backwards
+    /// </summary>
     public class StateTransformer
     {
         public static GameStateType TransformStringToState(string state)

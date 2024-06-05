@@ -15,21 +15,31 @@ using Breakout.Scores;
 using DIKUArcade.Timers;
 using Breakout.Levels;
 namespace Breakout.States {
+    /// <summary>
+    /// Represents the state, when the game is running. 
+    /// Can either transition to GamePaused or to GameOver, if the player loses or wins during the gameplay
+    /// </summary>
     public class GameRunning : IGameState {
         private static GameRunning instance;
         private Block b;
         private Level currentlevel;
-        //private List<Level> levels = new List<Level>();
         private Ball ball;
         private Player player;
         private const int pointsForWin = 200;
-        private string[] menuText = { "Lives: ", "Time: "};
-        private Text[] menuButtons = {new Text("Lives: ", new Vec2F(0.0f, 0.0f), new Vec2F(0.2f, 0.2f)), new Text("Time: ", new Vec2F(0.70f, 0.0f), new Vec2F(0.2f, 0.2f)), new Text("Score: ", new Vec2F(0.0f, 0.7f), new Vec2F(0.2f, 0.2f))};
+        private Text[] displayedInformation = {new Text("Lives: ", new Vec2F(0.0f, 0.0f), new Vec2F(0.2f, 0.2f)), new Text("Time: ", new Vec2F(0.70f, 0.0f), new Vec2F(0.2f, 0.2f)), new Text("Score: ", new Vec2F(0.0f, 0.7f), new Vec2F(0.2f, 0.2f))};
         private long timeStart;
         Random rnd = new Random();
+        /// <summary>
+        /// Returns the active GameRunning state, using the active level if one exist.
+        /// If it does not exist, a new GameRunning state is created. 
+        /// </summary>
         public static GameRunning GetInstance(int level) {
             return instance ?? (instance = new GameRunning(level));
         }
+        /// <summary>
+        /// Starts a new game.
+        ///Differentiates itself from GetInstance as GetInstance returns the current game.
+        /// </summary>
         public static GameRunning NewGame(int level){
             instance = new GameRunning(level);
             return (instance);
@@ -40,15 +50,6 @@ namespace Breakout.States {
         }
 
         private void InitializeGame(int level = 0) {
-            /* levels.Add(new Level("1", "central-mass.txt"));
-            levels.Add(new Level("2", "columns.txt"));
-            levels.Add(new Level("3", "level1.txt"));
-            levels.Add(new Level("4", "level2.txt"));
-            levels.Add(new Level("5", "level3.txt"));
-            levels.Add(new Level("6", "wall.txt"));
-            levels.Add(new Level("7", "level4.txt")); */
-
-            
             currentlevel = LevelHolder.Levels[level-1];
             ball = new Ball(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Image(Path.Combine("Assets", "Images", "ball.png")));
             player = new Player(
@@ -57,6 +58,10 @@ namespace Breakout.States {
             );
             timeStart = StaticTimer.GetElapsedMilliseconds();
         }
+        /// <summary>
+        /// Updates the state of the active Game. Starting the ball, ensuring the ball keeps on moving.
+        /// Ensuring the player can move. Checks for collisions, and checks is the game is won. 
+        /// </summary>
         public void UpdateState() {   
             ball.firstPush();
             ball.Shape.Move();
@@ -64,23 +69,25 @@ namespace Breakout.States {
             CheckForCollision();
             isWin();
         }
-
+    /// <summary>
+    /// Renders the state. Hereunder the dynamic information displays are updated. 
+    /// </summary>
          public void RenderState() {
             ball.RenderEntity();
             player.Render();
             currentlevel.blocks.RenderEntities();
-            menuButtons[0].SetText("Lives: " + player.Lives);
-            menuButtons[0].SetColor(new Vec3I(255, 255, 0));
-            menuButtons[0].RenderText();
-            menuButtons[2].SetText("Score: " + Score.GetScore());
-            menuButtons[2].SetColor(new Vec3I(255, 255, 0));
-            menuButtons[2].RenderText();
+            displayedInformation[0].SetText("Lives: " + player.Lives);
+            displayedInformation[0].SetColor(new Vec3I(255, 255, 0));
+            displayedInformation[0].RenderText();
+            displayedInformation[2].SetText("Score: " + Score.GetScore());
+            displayedInformation[2].SetColor(new Vec3I(255, 255, 0));
+            displayedInformation[2].RenderText();
             StaticTimer.ResumeTimer();  
             if(currentlevel.Time != 0){
                 long timeElapsedMilliseconds = StaticTimer.GetElapsedMilliseconds();
                 long timeElapsedSeconds = (timeElapsedMilliseconds-timeStart)/1000;
                 long timeLeft = currentlevel.Time - timeElapsedSeconds;
-                menuButtons[1].SetText("Time: " + timeLeft.ToString());
+                displayedInformation[1].SetText("Time: " + timeLeft.ToString());
                 if(timeLeft<=0){
                     BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                             EventType = GameEventType.GameStateEvent,
@@ -88,8 +95,8 @@ namespace Breakout.States {
                             StringArg1 = "GAME_OVER"
                         });
                 }
-                menuButtons[1].SetColor(new Vec3I(255, 255, 0));
-                menuButtons[1].RenderText();
+                displayedInformation[1].SetColor(new Vec3I(255, 255, 0));
+                displayedInformation[1].RenderText();
                 
             }
         }
@@ -111,7 +118,7 @@ namespace Breakout.States {
             }
             return win;
         }
-        public void CheckForCollision(){
+        private void CheckForCollision(){
             if(isBottomCollision()){
                 bool isPlayerDead = player.looseLifePoint();
                 if(isPlayerDead){
@@ -146,7 +153,6 @@ namespace Breakout.States {
                     blockCollision = true;
                 }
             });
-            //Console.WriteLine(CollisionDetection.Aabb(b, playerShape).CollisionDir);
             if(CollisionDetection.Aabb(b, playerShape).Collision){
                 paddleCollision = true;
                 bool negativeNoise = false;
@@ -184,7 +190,7 @@ namespace Breakout.States {
             }
         }
         
-        public Vec2F alterDirection(DynamicShape ball, bool alterX, bool alterY, bool noiseXMinus, bool noiseXPlus){
+        private Vec2F alterDirection(DynamicShape ball, bool alterX, bool alterY, bool noiseXMinus, bool noiseXPlus){
             float normFactor = 100.0f;
             float x = 0;
             float y = 0;
@@ -232,55 +238,6 @@ namespace Breakout.States {
         }
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
-            /* switch (action) {
-                case KeyboardAction.KeyPress:
-                    
-                    if (key == KeyboardKey.Left) {
-                        BreakoutBus.GetBus().RegisterEvent(new GameEvent {
-                        EventType = GameEventType.PlayerEvent,
-                        Message = "MOVE_LEFT",
-                        StringArg1 = "true",
-                        To=player
-
-                    });
-                    } else if (key == KeyboardKey.Right) {
-                        BreakoutBus.GetBus().RegisterEvent(new GameEvent {
-                        EventType = GameEventType.PlayerEvent,
-                        Message = "MOVE_RIGHT",
-                        StringArg1 = "true",
-                        To=player
-                    });
-                    } else if (key==KeyboardKey.Escape){
-                       BreakoutBus.GetBus().RegisterEvent(new GameEvent {
-                            EventType = GameEventType.GameStateEvent,
-                            Message = "CHANGE_STATE",
-                            StringArg1 = "GAME_PAUSED",
-
-                        });
-                    }
-                    break;
-                case KeyboardAction.KeyRelease:
-                    if (key == KeyboardKey.Left) {
-                        BreakoutBus.GetBus().RegisterEvent(new GameEvent {
-                        EventType = GameEventType.PlayerEvent,
-                        Message = "MOVE_LEFT",
-                        StringArg1 = "false",
-                        To=player
-                    });
-                    } else if (key == KeyboardKey.Right) {
-                        BreakoutBus.GetBus().RegisterEvent(new GameEvent {
-                        EventType = GameEventType.PlayerEvent,
-                        Message = "MOVE_RIGHT",
-                        StringArg1 = "false",
-                        To=player
-                    });
-                    } else if (key == KeyboardKey.Space) {
-                        Vec2F playerPos = player.GetPosition();
-                        playerShots.AddEntity(new PlayerShot(playerPos, playerShotImage));
-                    }
-                    break;
-            } */
-
             switch (action)
             {
                 case KeyboardAction.KeyPress:

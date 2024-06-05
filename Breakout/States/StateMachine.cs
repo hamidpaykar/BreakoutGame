@@ -5,6 +5,9 @@ using System;
 
 namespace Breakout.States
 {
+    /// <summary>
+    /// Statemachine, controlling which state is displayed currently.
+    /// </summary>
     public class StateMachine : IGameEventProcessor
     {
         public IGameState ActiveState { get; private set; }
@@ -21,7 +24,7 @@ namespace Breakout.States
             ActiveState = MainMenu.GetInstance();
         }
 
-        public void SwitchState(GameStateType stateType)
+        private void SwitchState(GameStateType stateType)
         {
             switch (stateType)
             {

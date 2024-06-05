@@ -10,6 +10,10 @@ using DIKUArcade.Events;
 using Breakout.Levels;
 namespace Breakout.States
 {
+    /// <summary>
+    /// Represents the MainMenu state of breakout. Here a level can be selected and subsequently start a game
+    /// Can transition into an new GameRunning or the game can be quit.
+    /// </summary>
     public class MainMenu : IGameState
     {
         private static MainMenu instance = null;
@@ -21,7 +25,7 @@ namespace Breakout.States
         private int activeMenuButton = 0;
         private int maxMenuButtons;
 
-        public MainMenu(){
+        private MainMenu(){
             maxMenuButtons = menuButtons.Length - 1;
 
         }
@@ -45,20 +49,7 @@ namespace Breakout.States
         /// </summary>
         public void UpdateState()
         {
-            /* for (int i = 0; i < menuButtons.Length; i++)
-            {
-                if (i == activeMenuButton)
-                {
-                    //menuButtons[i].SetText(menuText[i] + " ⬅︎ ");
-                    menuButtons[i].SetColor(new Vec3I(255, 255, 0));
-                }
-                else
-                {
-                    //menuButtons[i].SetText(menuText[i]);
-                    menuButtons[i].SetColor(new Vec3I(255, 255, 255));
-                }
-                menuButtons[i].RenderText();
-            } */
+
         }
 
 

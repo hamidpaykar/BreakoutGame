@@ -6,6 +6,9 @@ using System;
 
 namespace Breakout
 {
+    /// <summary>
+    /// Class representing the player, storing information and functionalities regarding the player. 
+    /// </summary>
     public class Player
     {
         private float moveLeft = 0.0f;
@@ -87,7 +90,6 @@ namespace Breakout
         private void UpdateDirection()
         {
             shape.Direction.X = moveRight + moveLeft;
-            //Console.WriteLine($"Updated Direction: {shape.Direction.X}");  // Debug output
         }
     }
 }

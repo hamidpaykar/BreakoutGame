@@ -10,6 +10,11 @@ using DIKUArcade.Events;
 using Breakout.Scores;
 namespace Breakout.States
 {
+    /// <summary>
+    /// Represents the state Game over, when the players actiones have lead to either a win or a loss
+    /// Renders the text You Won! or You lost, based on the current score. 
+    /// State can transition back main menu, restarting the game or quit the game entirely.
+    /// </summary>
     public class GameOver : IGameState
     {
         private static GameOver instance = null;
@@ -20,11 +25,14 @@ namespace Breakout.States
         private int activeMenuButton = 0;
         private int maxMenuButtons;
 
-        public GameOver(){
+        private GameOver(){
             maxMenuButtons = menuButtons.Length - 1;
             
         }
-
+    /// <summary>
+    /// When called a new instance of GameOver is created, if one is not already.
+    /// Score is reset, as the game is over 
+    /// </summary>
         public static GameOver GetInstance()
         {
             if (GameOver.instance == null)
@@ -45,17 +53,7 @@ namespace Breakout.States
         /// </summary>
         public void UpdateState()
         {
-           /*  for (int i = 0; i < menuButtons.Length; i++)
-            {
-                if (i == activeMenuButton)
-                {
-                    menuButtons[i].SetText(menuText[i] + " ⬅︎ ");
-                }
-                else
-                {
-                    menuButtons[i].SetText(menuText[i]);
-                }
-            } */
+
         }
 
 

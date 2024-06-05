@@ -10,6 +10,10 @@ using DIKUArcade.Events;
 
 namespace Breakout.States
 {
+    /// <summary>
+    /// Represents the Paused state. The state should be active when the player has paused the game. 
+    /// Transitions either back to the current game that is running or back to main menu.  
+    /// </summary>
     public class GamePaused : IGameState
     {
         private static GamePaused instance = null;
@@ -20,10 +24,13 @@ namespace Breakout.States
         private int activeMenuButton = 0;
         private int maxMenuButtons;
 
-        public GamePaused(){
+        private GamePaused(){
             maxMenuButtons = menuButtons.Length - 1;
         }
 
+        /// <summary>
+        /// When called a new instance of GamePaused is created, if one is not already.
+        /// </summary>
         public static GamePaused GetInstance()
         {
             if (GamePaused.instance == null)

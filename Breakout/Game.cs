@@ -15,6 +15,9 @@ using Breakout.Levels;
 
 namespace Breakout
 {
+    /// <summary>
+    /// Responsible for holding together the all subparts of breakout 
+    /// </summary>
     public class Game : DIKUGame, IGameEventProcessor
     {
         private StateMachine stateMachine;
@@ -25,19 +28,19 @@ namespace Breakout
         {
             LevelHolder.loadLevels();
             stateMachine = new StateMachine();
-            stateMachine.SwitchState(GameStateType.MainMenu);
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent });
             BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
             window.SetKeyEventHandler(KeyHandler);
-            //Console.WriteLine(LevelHolder.Levels.Count);
         }
 
+        /// <summary>
+        /// Instansiates the game in its entirety. 
+        /// </summary>
         public Game(WindowArgs windowArgs, bool initEventBus) : base(windowArgs)
         {
             stateMachine = new StateMachine();
-            stateMachine.SwitchState(GameStateType.GameRunning);
             if (initEventBus){
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent });
             }
@@ -48,41 +51,8 @@ namespace Breakout
         } 
 
         private void KeyHandler(KeyboardAction action, KeyboardKey key)
-        {
-            /* if (!(stateMachine.ActiveState is MainMenu || stateMachine.ActiveState is GameRunning || stateMachine.ActiveState is GamePaused || stateMachine.ActiveState is GameOver))
-            {
-                return; // Exit the method if not in an allowed game state
-            } */
-
-            //else{   
+        {  
             stateMachine.ActiveState.HandleKeyEvent(action, key);
-            //}
-
-            /* switch (action)
-            {
-                case KeyboardAction.KeyPress:
-                    switch (key)
-                    {
-                        case KeyboardKey.Left:
-                            player.SetMoveLeft(true);
-                            break;
-                        case KeyboardKey.Right:
-                            player.SetMoveRight(true);
-                            break;
-                    }
-                    break;
-                case KeyboardAction.KeyRelease:
-                    switch (key)
-                    {
-                        case KeyboardKey.Left:
-                            player.SetMoveLeft(false);
-                            break;
-                        case KeyboardKey.Right:
-                            player.SetMoveRight(false);
-                            break;
-                    }
-                    break;
-            } */
         }
 
 
@@ -90,18 +60,12 @@ namespace Breakout
         {
             stateMachine.ActiveState.UpdateState();
             BreakoutBus.GetBus().ProcessEventsSequentially();
-            //player.Move();
 
         }
 
         public override void Render()
         {
             stateMachine.ActiveState.RenderState();
-            
-            if (stateMachine.ActiveState is GameRunning)
-            {
-                //player.Render();
-            }
         }
 
         public void ProcessEvent(GameEvent gameEvent)

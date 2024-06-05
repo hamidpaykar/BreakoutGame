@@ -5,7 +5,10 @@ using System.IO;
 using System;
 using System.Collections.Generic; 
 namespace Breakout.Blocks;
-
+    /// <summary>
+    /// Extension/variant of the block class, with double the healthpoints and the possibility to display
+    /// that the block is damaged using a new image.
+    /// </summary>
 public class HardenedBlock : Block{
     private IBaseImage hurtBlock;
     private int healthForBreaking;

@@ -2,7 +2,9 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 namespace Breakout.Balls;
-
+/// <summary>
+/// Represents the ball in breakout.
+/// </summary>
 public class Ball : Entity
 {
     private static Vec2F direction = new Vec2F(0.0f, 0.01f);
@@ -14,11 +16,6 @@ public class Ball : Entity
         get { return this.originalVectorLength; }
     }
 
-   /*  public Vec2F Direction{
-        get{return direction;}
-        set{direction=value;
-        Di}
-    } */
     public bool IsStarted{
         get { return this.isStarted;}
     }

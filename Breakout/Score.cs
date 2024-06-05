@@ -1,6 +1,9 @@
 using DIKUArcade.Events;
 
 namespace Breakout.Scores {
+    /// <summary>
+    /// Stores the score uptained by playing across levels. 
+    /// </summary>
     public static class Score {
         private static int score = 0;
         private static bool isWin = false;
@@ -13,7 +16,6 @@ namespace Breakout.Scores {
             get {return isWin;}
         }
         public static int GetScore() {
-            //return score ??= new GameEventBus();
             return score;
         }
         public static void increaseScore(int value){

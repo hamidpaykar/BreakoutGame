@@ -5,6 +5,12 @@ using System.Collections.Generic;
 using System;
 
 namespace Breakout.Levels {
+    /// <summary>
+    /// Class for storing a collections of Level objects
+    /// When loadlevels is called the contents of the Assets/Levels folder is loaded into the levels field.
+    /// Storing relevant information about the collection of levels for easy access in GameRunning
+    /// and selection in mainmenu
+    /// </summary>
     public static class LevelHolder {
         private static List<Level> levels = new List<Level>();
         private static List<int> levelNumbers = new List<int>();
@@ -18,6 +24,9 @@ namespace Breakout.Levels {
         public static List<Level> Levels{
             get{return levels;}
         }
+        /// <summary>
+        /// Gets all levels from Assets/Levels
+        /// </summary>
         public static void loadLevels(){
             DirectoryInfo d = new DirectoryInfo(Path.Combine("Assets", "Levels")); //Assuming Test is your Folder
             int currentNumber = 1;
@@ -32,6 +41,9 @@ namespace Breakout.Levels {
             }
             Console.WriteLine(levels.Count);
         }
+        /// <summary>
+        /// Removes a level that is completed. 
+        /// </summary>
         public static void removeLevel(int levelNumber){
             levelNumbers.Remove(levelNumber);
             totalLevels -= 1;

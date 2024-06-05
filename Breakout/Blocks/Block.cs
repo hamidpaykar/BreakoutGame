@@ -5,8 +5,14 @@ using System.IO;
 using System;
 using System.Collections.Generic; 
 namespace Breakout.Blocks;
+    /// <summary>
+    /// Stores a block in breakout, with necessary information about the block.
+    /// This includes it position, health and points earned for breaking it.
+    /// Inlcudes a hit function that should be called when contact is made between the ball and the block.
+    /// </summary>
 public class Block : Entity
 {
+    
     protected int health;
     private int value;
     private Vec2F initialPosition;

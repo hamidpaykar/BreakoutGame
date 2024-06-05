@@ -7,6 +7,11 @@ using System.Collections.Generic;
 using Breakout.Blocks;
 
 namespace Breakout.LoadLevel;
+
+/// <summary>
+/// Class for representing a level, originally described in a txt file. 
+/// Information about the level to render it is stored in Level class. 
+/// </summary>
 public class Level
 {
     private string name = "";
@@ -28,7 +33,9 @@ public class Level
     public string FileName{
         get {return fileName;}
     }
-
+    /// <summary>
+    /// Instansiating a new level, with a name using a filename to fetch the level txt file.
+    /// </summary>
     public Level(string name, string fileName)
     {
         //this.name = name;

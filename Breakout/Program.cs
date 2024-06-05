@@ -2,6 +2,9 @@
 using DIKUArcade.GUI;
 namespace Breakout
 {
+    /// <summary>
+    /// Creates a window, where the game can be played
+    /// </summary>
     class Program
     {
         static void Main(string[] args)
@@ -12,7 +15,7 @@ namespace Breakout
 
             var windowArgs = new WindowArgs()
         {
-            Title = "Breakout v0.1"
+            Title = "Breakout"
         };
 
         var game = new Game(windowArgs);
