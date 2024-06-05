@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using System;
-using Galaga;
+using Breakout;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
@@ -17,8 +17,9 @@ using System;
 using System.IO;
 using DIKUArcade.Physics;
 using DIKUArcade.State;
+using Breakout.States;
 
-namespace GalagaTests;
+namespace BreakoutTest;
 
 //for the test to work a the Asset folder is copied into GalagaTest and copied again into a folder Galaga
 //which is pased into Galagatests
@@ -30,7 +31,6 @@ public class TestStateTransformer
     }
 
     [Test]
-    [Test]
     public void TestStringToGameRunning()
     {
         Assert.AreEqual(GameStateType.GameRunning, StateTransformer.TransformStringToState("GAME_RUNNING"));
@@ -40,33 +40,33 @@ public class TestStateTransformer
     [Test]
     public void TestGameRunningToString()
     {
-        Assert.Equals(StateTransformer.TransformStateToString(GameStateType.GameRunning),"GAME_RUNNING");
+        Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.GameRunning),"GAME_RUNNING");
     }
 
     [Test]
     public void TestStringToGamePaused()
     {
-        Assert.Equals(StateTransformer.TransformStringToState("GAME_PAUSED"), GameStateType.GamePaused);
+        Assert.AreEqual(StateTransformer.TransformStringToState("GAME_PAUSED"), GameStateType.GamePaused);
 
     }
 
     [Test]
     public void TestGamePausedToString()
     {
-        Assert.Equals(StateTransformer.TransformStateToString(GameStateType.GamePaused),"GAME_PAUSED");
+        Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.GamePaused),"GAME_PAUSED");
     }
 
     [Test]
     public void TestStringToMainMenu()
     {
-        Assert.Equals(StateTransformer.TransformStringToState("MAIN_MENU"), GameStateType.MainMenu);
+        Assert.AreEqual(StateTransformer.TransformStringToState("MAIN_MENU"), GameStateType.MainMenu);
 
     }
 
     [Test]
     public void TestMainMenuToString()
     {
-        Assert.Equals(StateTransformer.TransformStateToString(GameStateType.MainMenu),"MAIN_MENU");
+        Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.MainMenu),"MAIN_MENU");
     }
 
 

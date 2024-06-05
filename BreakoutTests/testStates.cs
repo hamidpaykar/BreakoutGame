@@ -24,9 +24,10 @@ namespace BreakoutTest;
 //which is pased into Galagatests
 
 [TestFixture]
-public class TestsBlock
+public class TestStates
 {
     public Block block;
+    public int initialHealth = 3;
     [OneTimeSetUp]
     public void Setup()
     {
@@ -36,8 +37,8 @@ public class TestsBlock
         };
 
         var game = new Game(windowArgs, false);
-        block = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                "blue-block.png", 3, 3);
+        block = new HardenedBlock(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                "blue-block.png", initialHealth, 3);
     }
 
     [SetUp]
@@ -49,21 +50,25 @@ public class TestsBlock
         };
 
         var game = new Game(windowArgs, false);
-        block = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                "blue-block.png", 3, 3);
+        block = new HardenedBlock(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+               "blue-block.png", 3, 3);
     }
 
     [Test]
     //Testing the hit function of the block. It is hit 3 times and should be alive the first to and die after the third.
-    public void test1()
+    public void isDoubleHealth()
     {
-        bool isDead = block.Hit();
-        Assert.IsFalse(isDead);
-
-        isDead = block.Hit();
-        Assert.IsFalse(isDead);
-
-        isDead = block.Hit();
-        Assert.IsTrue(isDead);
+        Assert.AreEqual(2*initialHealth, block.Health);
+    }
+    [Test]
+    //Testing the hit function of the block. It is hit 3 times and should be alive the first to and die after the third.
+    public void changesImageWhenHit()
+    {   
+        IBaseImage oldImage = block.Image;
+        block.Hit();
+        block.Hit();
+        block.Hit();
+        IBaseImage newImage = block.Image;
+        Assert.AreEqual(oldImage, newImage);
     }
 }

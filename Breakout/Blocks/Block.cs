@@ -32,7 +32,7 @@ public class Block : Entity
         this.fileName = fileName;
     }
     //Decrements health by 1 and returns false if Block has positive health
-    public bool Hit(){
+    public virtual bool Hit(){
         bool isDead = false;
         this.health -=1;
         if(this.health < 1){

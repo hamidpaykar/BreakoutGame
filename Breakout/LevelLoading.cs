@@ -9,12 +9,12 @@ using Breakout.Blocks;
 namespace Breakout.LoadLevel;
 public class Level
 {
-    private string name;
-    private int time;
-    private string powerUp;
-    private string unbreakable;
-    private string hardened;
-    private string fileName;
+    private string name = "";
+    private int time = 0;
+    private string powerUp = "";
+    private string unbreakable = "";
+    private string hardened = "";
+    private string fileName = "";
     public EntityContainer<Block> blocks;
 
     private Dictionary<char, string> legend;
@@ -22,7 +22,9 @@ public class Level
     public string Name{
         get {return name;}
     }
-
+    public int Time{
+        get {return time;}
+    }
     public string FileName{
         get {return fileName;}
     }
@@ -72,7 +74,6 @@ public class Level
         }
         finally
         {
-            Console.WriteLine("Executing finally block.");
         }
         return legend;
     }
@@ -127,7 +128,6 @@ public class Level
         }
         finally
         {
-            Console.WriteLine("Executing finally block.");
         }
     }
 
@@ -162,17 +162,25 @@ public class Level
                         if (line[i]!='-'){
                             float y = ((totalHeight-row)*height)-height;
                             float x = ((totalWidth-i)*width) - width;
-                            Block newBlock;
-                            if(line[i].ToString()==this.unbreakable){
+                            //Block newBlock;
+                            Block newBlock = new Block(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
+                            
+                            if(this.unbreakable.Length > 0){
+                                if(line[i]==this.unbreakable[0]){
                                 newBlock = new UnbreakableBlock(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
 
                             }
-                            else if(line[i].ToString()==this.hardened){
+                            }
+                            if(this.hardened.Length > 0){
+                                if(line[i]==this.hardened[0]){
                                 newBlock = new HardenedBlock(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
                             }
-                            else{
-                                newBlock = new Block(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
                             }
+                            
+                           /*  else{
+                                Console.WriteLine("Entered else");
+                                newBlock = new Block(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
+                            } */
                             this.blocks.AddEntity(newBlock);
 
                         }
@@ -193,8 +201,16 @@ public class Level
         }
         finally
         {
-            Console.WriteLine("Executing finally block.");
         }
+    }
+
+    public bool looseTime(int time){
+        bool isTimeOver = false;
+        this.time -= time;
+        if(this.time <1){
+            isTimeOver = true;
+        }
+        return isTimeOver;
     }
 
 }

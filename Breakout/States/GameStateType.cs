@@ -7,7 +7,9 @@ namespace Breakout.States
     {
         GameRunning,
         GamePaused,
-        MainMenu
+        MainMenu,
+        GameOver,
+        LevelSelector
     }
     public class StateTransformer
     {
@@ -24,9 +26,15 @@ namespace Breakout.States
                 case "MAIN_MENU":
                     transformedState = GameStateType.MainMenu;
                     break;
+                case "GAME_OVER":
+                    transformedState = GameStateType.GameOver;
+                    break;
+                case "LEVEL_SELECTOR":
+                    transformedState = GameStateType.LevelSelector;
+                    break;
                 default:
                     throw new ArgumentException(String.Format("{0} is not at valid string code", state), "state");
-
+                    break;
             }
             return transformedState;
         }
@@ -44,8 +52,15 @@ namespace Breakout.States
                 case GameStateType.MainMenu:
                     transformedState = "MAIN_MENU";
                     break;
+                case GameStateType.GameOver:
+                    transformedState = "GAME_OVER";
+                    break;
+                case GameStateType.LevelSelector:
+                    transformedState = "LEVEL_SELECTOR";
+                    break;
                 default:
                     throw new ArgumentException(String.Format("{0} is not at valid state", state), "state");
+                    break;
 
             }
             return transformedState;

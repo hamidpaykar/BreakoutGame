@@ -11,7 +11,7 @@ using System;
 using DIKUArcade.Math;
 using System.IO;
 using DIKUArcade.Physics;
-
+using Breakout.Levels;
 
 namespace Breakout
 {
@@ -23,7 +23,7 @@ namespace Breakout
 
         public Game(WindowArgs windowArgs) : base(windowArgs)
         {
-            
+            LevelHolder.loadLevels();
             stateMachine = new StateMachine();
             stateMachine.SwitchState(GameStateType.MainMenu);
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent });
@@ -31,19 +31,7 @@ namespace Breakout
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
             window.SetKeyEventHandler(KeyHandler);
-
-
-
-
-
-            // Initialize the player
-            /* player = new Player(
-                new DynamicShape(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Vec2F(0.3f, 0.06f)),
-                new Image(Path.Combine("Assets", "Images", "Player.png"))
-            ); */
-
-
-
+            //Console.WriteLine(LevelHolder.Levels.Count);
         }
 
         public Game(WindowArgs windowArgs, bool initEventBus) : base(windowArgs)
@@ -57,27 +45,20 @@ namespace Breakout
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
             window.SetKeyEventHandler(KeyHandler);
-
-
-            /* // Initialize the player
-            player = new Player(
-                new DynamicShape(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Vec2F(0.3f, 0.06f)),
-                new Image(Path.Combine("Assets", "Images", "Player.png"))
-            );*/
         } 
 
         private void KeyHandler(KeyboardAction action, KeyboardKey key)
         {
-            if (!(stateMachine.ActiveState is MainMenu || stateMachine.ActiveState is GameRunning || stateMachine.ActiveState is GamePaused))
+            /* if (!(stateMachine.ActiveState is MainMenu || stateMachine.ActiveState is GameRunning || stateMachine.ActiveState is GamePaused || stateMachine.ActiveState is GameOver))
             {
                 return; // Exit the method if not in an allowed game state
-            }
+            } */
 
-            else{   
+            //else{   
             stateMachine.ActiveState.HandleKeyEvent(action, key);
-            }
+            //}
 
-            switch (action)
+            /* switch (action)
             {
                 case KeyboardAction.KeyPress:
                     switch (key)
@@ -101,7 +82,7 @@ namespace Breakout
                             break;
                     }
                     break;
-            }
+            } */
         }
 
 

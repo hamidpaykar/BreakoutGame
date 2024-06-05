@@ -10,7 +10,7 @@ public class UnbreakableBlock : Block{
     public UnbreakableBlock(DynamicShape shape, string fileName, int value, int health) : base(shape, fileName, value, int.MaxValue) {
         
     }
-    public bool Hit(){
+    public override bool Hit(){
         return false;
     }
 

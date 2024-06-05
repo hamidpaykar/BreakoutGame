@@ -14,7 +14,7 @@ public class HardenedBlock : Block{
         hurtBlock = new Image(Path.Combine("Assets", "Images", hurtFile));
         healthForBreaking = health/2;
     }
-    public bool Hit(){
+    public override bool Hit(){
         bool isDead = false;
         this.health -=1;
         if(this.health <= healthForBreaking){

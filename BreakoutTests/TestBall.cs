@@ -39,7 +39,7 @@ public class TestBall
 
         var game = new Game(windowArgs);
         block = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 3, 3);
+                "blue-block.png", 3, 3);
         ball = new Ball(new Vec2F(0.5f - 0.2f / 2, 0.1f), new Image(Path.Combine("Assets", "Images", "ball.png")));
 
     }
@@ -54,7 +54,7 @@ public class TestBall
 
         var game = new Game(windowArgs, false);
         block = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 3, 3);
+                "blue-block.png", 3, 3);
         
     }
 
@@ -62,9 +62,9 @@ public class TestBall
     //Testing the if first push function actually works and sets the isStarted field to true.
     public void testFirstPush()
     {
-        Vec2F positionPrevious = ball.Shape.Position
+        Vec2F positionPrevious = ball.Shape.Position;
         ball.firstPush();
-        Vec2F positionAfter = ball.Shape.Position
+        Vec2F positionAfter = ball.Shape.Position;
         Assert.AreNotEqual(positionAfter, positionPrevious);
         Assert.AreEqual(true, ball.IsStarted);
         

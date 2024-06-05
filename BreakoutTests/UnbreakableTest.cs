@@ -35,9 +35,9 @@ public class TestsUnbreakable
             Title = "Galaga v0.1"
         };
 
-        var game = new Game(windowArgs);
+        var game = new Game(windowArgs, false);
         block = new UnbreakableBlock(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 3, 3);
+                "blue-block.png", 3, 3);
     }
 
     [SetUp]
@@ -49,8 +49,8 @@ public class TestsUnbreakable
         };
 
         var game = new Game(windowArgs, false);
-        block = new Block(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "blue-block.png")), 3, 3);
+        block = new UnbreakableBlock(new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                "blue-block.png", 3, 3);
     }
 
     [Test]
@@ -58,8 +58,9 @@ public class TestsUnbreakable
     public void test1()
     {
         int health = block.Health;
+        block.Hit();
         bool isDead = block.Hit();
         Assert.IsFalse(isDead);
-        Assert.AreEqual(health, block.Health);
+        Assert.AreEqual(int.MaxValue, block.Health);
     }
 }

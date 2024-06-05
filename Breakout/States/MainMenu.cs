@@ -7,21 +7,23 @@ using System;
 using System.IO;
 using DIKUArcade.State;
 using DIKUArcade.Events;
-
+using Breakout.Levels;
 namespace Breakout.States
 {
     public class MainMenu : IGameState
     {
         private static MainMenu instance = null;
         private Entity backGroundImage = new Entity(new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)), new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png")));
-        private string[] menuText = { "New game", "Quit" };
-
-        private Text[] menuButtons = {new Text("New game", new Vec2F(0.44f, 0.25f), new Vec2F(0.2f, 0.2f)), new Text("Quit", new Vec2F(0.44f, 0.35f), new Vec2F(0.2f, 0.2f))};
+        private string[] menuText = { "New game", "Quit", "Current level"};
+        private int currentlevel = 1;
+        private int maxLevel;
+        private Text[] menuButtons = {new Text("New game", new Vec2F(0.44f, 0.25f), new Vec2F(0.2f, 0.2f)), new Text("Quit", new Vec2F(0.44f, 0.35f), new Vec2F(0.2f, 0.2f)), new Text("Level", new Vec2F(0.44f, 0.45f), new Vec2F(0.2f, 0.2f))};
         private int activeMenuButton = 0;
         private int maxMenuButtons;
 
         public MainMenu(){
             maxMenuButtons = menuButtons.Length - 1;
+
         }
 
         public static MainMenu GetInstance()
@@ -43,17 +45,20 @@ namespace Breakout.States
         /// </summary>
         public void UpdateState()
         {
-            for (int i = 0; i < menuButtons.Length; i++)
+            /* for (int i = 0; i < menuButtons.Length; i++)
             {
                 if (i == activeMenuButton)
                 {
-                    menuButtons[i].SetText(menuText[i] + " ⬅︎ ");
+                    //menuButtons[i].SetText(menuText[i] + " ⬅︎ ");
+                    menuButtons[i].SetColor(new Vec3I(255, 255, 0));
                 }
                 else
                 {
-                    menuButtons[i].SetText(menuText[i]);
+                    //menuButtons[i].SetText(menuText[i]);
+                    menuButtons[i].SetColor(new Vec3I(255, 255, 255));
                 }
-            }
+                menuButtons[i].RenderText();
+            } */
         }
 
 
@@ -63,11 +68,21 @@ namespace Breakout.States
         public void RenderState()
         {
             backGroundImage.RenderEntity();
-
-            foreach (var button in menuButtons)
+            menuButtons[2].SetText("Level: " + currentlevel.ToString());
+            menuButtons[2].SetColor(new Vec3I(255, 255, 255));
+            menuButtons[2].RenderText();
+            for (int i = 0; i < menuButtons.Length; i++)
             {
-                button.SetColor(new Vec3I(255, 255, 255)); // Set text color to white
-                button.RenderText();
+                
+                if (i == activeMenuButton)
+                {
+                    menuButtons[i].SetColor(new Vec3I(255, 255, 0));
+                }
+                else
+                {
+                    menuButtons[i].SetColor(new Vec3I(255, 255, 255));
+                }
+                menuButtons[i].RenderText();
             }
         }
 
@@ -115,18 +130,33 @@ namespace Breakout.States
         {
             if (activeMenuButton == 0)
             {
+                //LevelHolder.removeLevel(currentlevel);
+                //int level = currentlevel;
                 BreakoutBus.GetBus().RegisterEvent(
                     new GameEvent
                     {
                         EventType = GameEventType.GameStateEvent,
                         Message = "CHANGE_STATE",
-                        StringArg1 = "GAME_RUNNING"
+                        StringArg1 = "GAME_RUNNING",
+                        StringArg2 = currentlevel.ToString()
                     }
                 );
             }
             else if (activeMenuButton == 1)
             {
-                Console.WriteLine("Exit, not implemented yet");
+                BreakoutBus.GetBus().RegisterEvent(
+                    new GameEvent
+                    {
+                        EventType = GameEventType.GameStateEvent,
+                        Message = "CLOSE_WINDOW",
+                    }
+                );
+            }
+            else if(activeMenuButton == 2){
+                currentlevel++;
+                if(currentlevel > LevelHolder.TotalLevels){
+                    currentlevel = 1;
+                }
             }
         }
     }

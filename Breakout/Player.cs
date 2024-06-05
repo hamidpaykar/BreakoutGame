@@ -11,14 +11,20 @@ namespace Breakout
         private float moveLeft = 0.0f;
         private float moveRight = 0.0f;
         const float MOVEMENT_SPEED = 0.01f;
+
         private Entity entity;
         private DynamicShape shape;
+        private int lives;
         public Shape Shape{
             get { return shape;}
+        }
+        public int Lives{
+            get { return lives;}
         }
         public Player(DynamicShape shape, IBaseImage image)
         {
             entity = new Entity(shape, image);
+            lives = 1;
             this.shape = shape;
             if (shape == null)
             {
@@ -56,7 +62,16 @@ namespace Breakout
         {
             return new Vec2F(shape.Position.X + shape.Extent.X / 2.0f, shape.Position.Y + shape.Extent.Y / 2.0f);
         }
-
+        public bool looseLifePoint(){
+            bool isDead = false;
+            if(lives >=0){
+                lives-=1;
+            }
+            if(lives <0){
+                isDead = true;
+            }
+            return isDead;
+        }
         public void SetMoveLeft(bool value)
         {
             moveLeft = value ? -MOVEMENT_SPEED : 0.0f;
