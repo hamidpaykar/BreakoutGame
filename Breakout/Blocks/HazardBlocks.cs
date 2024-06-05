@@ -15,12 +15,16 @@ using DIKUArcade.Physics;
 
 namespace Breakout.Blocks
 {
-    // Enumeration for different types of hazards
+    // 
+    /// <summary>
+    /// Enumeration for different types of hazards
+    /// </summary>
     public enum HazardType
     {
         Slowness,
         SlimJim,
     }
+
 
     public class HazardBlock : Block
     {
@@ -73,6 +77,9 @@ namespace Breakout.Blocks
         }
 
         // Constructor for the HazardBlock
+        /// <summary>
+    /// Power up block class, has the same capabilities but can apply hazards.
+    /// </summary>
         public HazardBlock(DynamicShape shape, string fileName, int value, int health) : base(shape, fileName, value, health)
         {
             hazardTimer = new Timer(); // Initialize the timer

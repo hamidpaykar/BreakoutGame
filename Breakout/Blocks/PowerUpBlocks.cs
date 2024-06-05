@@ -14,7 +14,9 @@ using DIKUArcade.Physics;
 
 namespace Breakout.Blocks
 {
-    // Enumeration for different types of power-ups
+    //// <summary>
+    /// Enumeration for different types of powerups
+    /// </summary>
     public enum PowerUpType
     {
         HalfSpeed,
@@ -53,7 +55,9 @@ namespace Breakout.Blocks
             return stopwatch.Elapsed.TotalSeconds;
         }
     }
-
+/// <summary>
+    /// Power up block class, has the same capabilities but can apply powerups.
+    /// </summary>
     public class PowerUpBlock : Block
     {
         private PowerUpType powerUpType;
