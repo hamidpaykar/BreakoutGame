@@ -4,6 +4,7 @@ using DIKUArcade.Math;
 using System.IO;
 using System;
 using System.Collections.Generic; 
+using Breakout.Balls;
 namespace Breakout.Blocks;
     /// <summary>
     /// Extension/variant of the Block class, with unlimited healthpoitns, thereby being unbreakable
@@ -12,7 +13,7 @@ public class UnbreakableBlock : Block{
     public UnbreakableBlock(DynamicShape shape, string fileName, int value, int health) : base(shape, fileName, value, int.MaxValue) {
         
     }
-    public override bool Hit(){
+    public override bool Hit(Ball ball){
         return false;
     }
 

@@ -4,6 +4,7 @@ using DIKUArcade.Math;
 using System.IO;
 using System;
 using System.Collections.Generic; 
+using Breakout.Balls;
 namespace Breakout.Blocks;
     /// <summary>
     /// Extension/variant of the block class, with double the healthpoints and the possibility to display
@@ -17,7 +18,7 @@ public class HardenedBlock : Block{
         hurtBlock = new Image(Path.Combine("Assets", "Images", hurtFile));
         healthForBreaking = health/2;
     }
-    public override bool Hit(){
+    public override bool Hit(Ball ball){
         bool isDead = false;
         this.health -=1;
         if(this.health <= healthForBreaking){

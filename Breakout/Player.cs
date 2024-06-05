@@ -15,6 +15,15 @@ namespace Breakout
         private float moveRight = 0.0f;
         const float MOVEMENT_SPEED = 0.01f;
 
+        const float DefaultSpeed = 0.01f;
+
+        private float originalPaddleSize;
+
+        const float DefaultPaddleSize = 0.1f; // Declare DefaultPaddleSize here
+
+
+        public float Speed { get; private set; } = DefaultSpeed;
+
         private Entity entity;
         private DynamicShape shape;
         private int lives;
@@ -33,7 +42,72 @@ namespace Breakout
             {
                 this.shape = new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(0.1f, 0.1f));
             }
+
+            originalPaddleSize = shape.Extent.X;
         }
+
+
+
+
+        // PADDLE POWER-UP ----------------------------
+
+        public float PaddleSize { get; set; }
+
+        public void DoublePaddleSize()
+        {
+            shape.Extent.X *= 2;
+        }
+
+        public void ResetPaddleSize()
+        {
+            PaddleSize = DefaultPaddleSize;
+            shape.Extent.X = DefaultPaddleSize; 
+        }
+
+        // --------------------------------------------
+
+        //speed power-up ------------------------------
+
+        public void HalfSpeed()
+        {
+            Speed = DefaultSpeed / 2;
+            Console.WriteLine("2");
+        }
+
+        public void DoubleSpeed()
+        {
+            Speed *= 2;
+            Console.WriteLine("2");
+        }
+
+        public void ResetSpeed()
+        {
+            Speed = DefaultSpeed;
+        }
+
+        // --------------------------------------------
+
+        // Hazard effect ------------------------------
+
+        public void ActivateSlimJim()
+        {
+            // Decrease the width of the paddle from both sides
+            shape.Position.X += shape.Extent.X / 4;
+            shape.Extent.X /= 2;
+            Console.WriteLine("3");
+        }
+
+
+        public void DeactivateSlimJim()
+        {
+            // Reset the width of the paddle and its position
+            shape.Position.X -= shape.Extent.X / 2;
+            shape.Extent.X = originalPaddleSize;
+
+        }
+
+
+        // --------------------------------------------
         public void Render()
         {
             // TODO: render the player entity
@@ -59,6 +133,10 @@ namespace Breakout
 
             //Console.WriteLine($"After Adjustment - X: {shape.Position.X}, Width: {shape.Extent.X}, Direction: {shape.Direction.X}");
         }
+
+
+
+        
 
 
         public Vec2F GetPosition()
@@ -90,6 +168,7 @@ namespace Breakout
         private void UpdateDirection()
         {
             shape.Direction.X = moveRight + moveLeft;
+            //Console.WriteLine($"Updated Direction: {shape.Direction.X}");  // Debug output
         }
     }
 }

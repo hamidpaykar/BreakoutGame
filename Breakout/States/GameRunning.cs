@@ -56,6 +56,7 @@ namespace Breakout.States {
                 new DynamicShape(new Vec2F(0.5f - 0.3f / 2, 0.1f), new Vec2F(0.3f, 0.06f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))
             );
+            ball.Player = player;
             timeStart = StaticTimer.GetElapsedMilliseconds();
         }
         /// <summary>
@@ -128,8 +129,10 @@ namespace Breakout.States {
                             StringArg1 = "GAME_OVER"
                         });
                 }
+
                 ball.DeleteEntity();
                 ball = new Ball(new Vec2F(player.Shape.Position.X, 0.1f), new Image(Path.Combine("Assets", "Images", "ball.png")));
+                ball.Player = player; 
             }
             bool wallCollision = isWallCollision();
             bool topCollision = isTopCollision();
@@ -138,20 +141,23 @@ namespace Breakout.States {
             bool paddleCollision = false;
             DynamicShape b = ball.Shape.AsDynamicShape();
             DynamicShape playerShape = player.Shape.AsDynamicShape();
+
             currentlevel.blocks.Iterate((Block block) =>
             {
+                block.Update(ball, player);
                 Shape blockShape = block.Shape;
                 CollisionData collision = CollisionDetection.Aabb(b, blockShape);
                 if(collision.Collision){
-                    bool isDead = block.Hit();
+                    bool isDead = block.Hit(ball);
                     if(isDead){
-                        Score.increaseScore(block.Value);
-                        block.DeleteEntity();
-                        
+                        Score.increaseScore(block.Value);                        
                     }
                     colDir = collision.CollisionDir;
                     blockCollision = true;
                 }
+                if(block.forDeletion(ball, player)){
+                        block.DeleteEntity();
+                    }
             });
             if(CollisionDetection.Aabb(b, playerShape).Collision){
                 paddleCollision = true;

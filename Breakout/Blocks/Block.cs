@@ -4,6 +4,7 @@ using DIKUArcade.Math;
 using System.IO;
 using System;
 using System.Collections.Generic; 
+using Breakout.Balls;
 namespace Breakout.Blocks;
     /// <summary>
     /// Stores a block in breakout, with necessary information about the block.
@@ -38,13 +39,23 @@ public class Block : Entity
         this.fileName = fileName;
     }
     //Decrements health by 1 and returns false if Block has positive health
-    public virtual bool Hit(){
+    public virtual bool Hit(Ball ball){
         bool isDead = false;
         this.health -=1;
-        if(this.health < 1){
+        if(this.health < 1 ){
             isDead = true;
         }
         return isDead;
+    }
+    public virtual bool forDeletion(Ball ball, Player player){
+        bool delete = false;
+        if(this.health < 1){
+            delete = true;
+        }
+        return delete;
+    }
+    public virtual void Update(Ball ball, Player player){
+
     }
 
 }

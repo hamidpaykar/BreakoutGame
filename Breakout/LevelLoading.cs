@@ -15,6 +15,7 @@ namespace Breakout.LoadLevel;
 public class Level
 {
     private string name = "";
+    private string hazard = "";
     private int time = 0;
     private string powerUp = "";
     private string unbreakable = "";
@@ -120,6 +121,9 @@ public class Level
                     else if (line.Contains("Hardened")){
                         this.hardened = line.Substring(10);
                     }
+                    else if (line.Contains("Hazard")){
+                        this.hazard = line.Substring(10);
+                    }
                 }
                 
                 //write the line to console window
@@ -183,7 +187,16 @@ public class Level
                                 newBlock = new HardenedBlock(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
                             }
                             }
-                            
+                            if(this.powerUp.Length > 0){
+                                if(line[i]==this.powerUp[0]){
+                                newBlock = new PowerUpBlock(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
+                            }
+                            }
+                            if(this.hazard.Length > 0){
+                                if(line[i]==this.hazard[0]){
+                                newBlock = new HazardBlock(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
+                            }
+                            }
                            /*  else{
                                 Console.WriteLine("Entered else");
                                 newBlock = new Block(new DynamicShape(new Vec2F(x, y), new Vec2F(width,height)),this.legend[line[i]], 3, 3);
