@@ -21,9 +21,14 @@ This project involves the development of a Breakout game using object-oriented d
 - Illustrates the main classes involved in the game application: Game, LevelLoader, and Player.
 - Highlights the relationships and interactions between these classes, providing an overview of the application structure.
 
+![2024-06-24 at 12 16 47](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/fc44b395-00b5-48e7-af41-f54517a4c0c3)
+
+
 ### Sequence Diagram
 - Shows the dynamic interactions between objects in the game design.
 - Visualizes the sequence of operations and updates, offering a valuable tool for analyzing the game's behavior.
+  
+![2024-06-24 at 08 50 18](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/eb84df5a-17cd-4344-aad7-5c9f76331a88)
 
 ## Design
 
