@@ -7,99 +7,107 @@ This project involves the development of a Breakout game using object-oriented d
 ## Game Requirements
 
 ### Task 1: Basic Mechanics
-- Implement the basic game mechanics including paddle control, ball, and basic block structures.
+-  Implement the basic game mechanics including paddle control, ball, and basic block structures.
 
 ### Task 2: Advanced Features
-- Extend the game with advanced block types and power-ups.
+-  Extend the game with advanced block types and power-ups.
 
 ### Task 3: State Machine
-- Implement a state machine to manage different game states such as main menu, running game, paused game, and game over.
+-  Implement a state machine to manage different game states such as main menu, running game, paused game, and game over.
 
 ## UML Diagrams
 
 ### Class Diagram
-- Illustrates the main classes involved in the game application: Game, LevelLoader, and Player.
-- Highlights the relationships and interactions between these classes, providing an overview of the application structure.
+-  Illustrates the main classes involved in the game application: Game, LevelLoader, and Player.
+-  Highlights the relationships and interactions between these classes, providing an overview of the application structure.
 
-![2024-06-24 at 12 16 47](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/fc44b395-00b5-48e7-af41-f54517a4c0c3)
-
+![Class Diagram](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/fc44b395-00b5-48e7-af41-f54517a4c0c3)
 
 ### Sequence Diagram
-- Shows the dynamic interactions between objects in the game design.
-- Visualizes the sequence of operations and updates, offering a valuable tool for analyzing the game's behavior.
-  
-![2024-06-24 at 08 50 18](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/eb84df5a-17cd-4344-aad7-5c9f76331a88)
+-  Shows the dynamic interactions between objects in the game design.
+-  Visualizes the sequence of operations and updates, offering a valuable tool for analyzing the game's behavior.
+
+![Sequence Diagram](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/eb84df5a-17cd-4344-aad7-5c9f76331a88)
 
 ## Design
 
 ### Key Classes
 
 #### Block Class
-- Represents individual blocks in the game.
-- Manages block life, points awarded for destroying it, collision detection, and destruction.
+-  Represents individual blocks in the game.
+-  Manages block life, points awarded for destroying it, collision detection, and destruction.
 
 #### Player Class
-- Controls paddle movement, ensuring it stays within screen boundaries.
-- Handles user input and updates the paddle's position.
+-  Controls paddle movement, ensuring it stays within screen boundaries.
+-  Handles user input and updates the paddle's position.
 
 #### Ball Class
-- Manages the ball's movement and collision detection with other game elements like the paddle and blocks.
-- Updates the ball's position and direction based on interactions.
+-  Manages the ball's movement and collision detection with other game elements like the paddle and blocks.
+-  Updates the ball's position and direction based on interactions.
 
 ### Advanced Classes
 
 #### PowerUpBlock Class
-- Manages power-ups in the game, activating special effects when blocks are hit.
-- Handles the logic for various types of power-ups.
+-  Manages power-ups in the game, activating special effects when blocks are hit.
+-  Handles the logic for various types of power-ups.
 
 #### HazardBlock Class
-- Introduces challenging obstacles that players must navigate.
-- Triggers traps or other hazards when hit, which players must avoid or overcome.
+-  Introduces challenging obstacles that players must navigate.
+-  Triggers traps or other hazards when hit, which players must avoid or overcome.
 
 ## Implementation
 
 ### Game State Management
 The game uses a state machine to handle different game states:
 
-- **MainMenu**: The starting state where players can choose to start a new game or access settings.
-- **GameRunning**: The state where the game loop is executed.
-- **GamePaused**: The state where the game is temporarily stopped when paused.
-- **GameOver**: The state when the player loses all lives, allowing them to restart or return to the main menu.
+-  **MainMenu**: The starting state where players can choose to start a new game or access settings.
+-  **GameRunning**: The state where the game loop is executed.
+-  **GamePaused**: The state where the game is temporarily stopped when paused.
+-  **GameOver**: The state when the player loses all lives, allowing them to restart or return to the main menu.
 
 ## Design Patterns
 
 ### Singleton Pattern
-- Ensures the game state is instantiated only once, providing a global method and maintaining consistent state throughout the game.
+-  Ensures the game state is instantiated only once, providing a global method and maintaining consistent state throughout the game.
 
 ### Observer Pattern
-- Facilitates communication between different game elements such as the game engine, state machine, and user interface.
+-  Facilitates communication between different game elements such as the game engine, state machine, and user interface.
 
 ## SOLID Principles
 
-- **Single Responsibility**: Each class has a distinct responsibility (e.g., Game, StateMachine, and Score classes).
-- **Open/Closed**: The Block class is extendable through subclasses.
-- **Liskov Substitution**: Game state classes implement the IGameState interface.
-- **Interface Segregation**: The IGameEventProcessor interface exemplifies this principle.
-- **Dependency Inversion**: Game and BreakoutBus classes rely on abstractions.
+-  **Single Responsibility**: Each class has a distinct responsibility (e.g., Game, StateMachine, and Score classes).
+-  **Open/Closed**: The Block class is extendable through subclasses.
+-  **Liskov Substitution**: Game state classes implement the IGameState interface.
+-  **Interface Segregation**: The IGameEventProcessor interface exemplifies this principle.
+-  **Dependency Inversion**: Game and BreakoutBus classes rely on abstractions.
 
 ## Project Showcase
 
-
 ### Start Screen / Level Selection
-![2024-06-19 at 18 27 45](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/c1809bc4-d2fb-4f42-b55d-b080f20c7ce7)
-
+![Start Screen](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/c1809bc4-d2fb-4f42-b55d-b080f20c7ce7)
 *Spillet giver en hjemme skærm der giver spillerne mulighed for at vælge mellem en række udfordrende levels.*
 
-### Gameplay Screenshot!
-![2024-06-19 at 18 28 18](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/f66fca0f-5c36-487c-afaa-d0e0becc7c1d)
-
+### Gameplay Screenshot
+![Gameplay](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/f66fca0f-5c36-487c-afaa-d0e0becc7c1d)
 *Her ser vi de grundlæggende Breakout-spiloplevelse der viser paddle boldens og blokkene som spillerne skal ødelægge for at komme videre til de næste niveauer.*
 
-### Power Ups!
-![2024-06-19 at 18 35 23](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/6749b8dc-88c1-4e20-8d38-964ed6bda0f2)
-
+### Power Ups
+![Power Ups](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/6749b8dc-88c1-4e20-8d38-964ed6bda0f2)
 *Spillet inkluderer forskellige power-ups der forbedrer gameplay ved at give midlertidige fordele.*
 
+## Running the Game
+
+To run the game, follow these steps:
+
+1. Open your terminal or command prompt.
+2. Navigate to the `Breakout` directory:
+    ```sh
+    cd Breakout
+    ```
+3. Build and run the game using the .NET CLI:
+    ```sh
+    dotnet run --build
+    ```
 
 ## Conclusion
 
