@@ -79,19 +79,20 @@ The game uses a state machine to handle different game states:
 
 ## Project Showcase
 
+
 ### Start Screen / Level Selection
-[2024-06-19 at 18 27 45](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/c1809bc4-d2fb-4f42-b55d-b080f20c7ce7)
+![2024-06-19 at 18 27 45](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/c1809bc4-d2fb-4f42-b55d-b080f20c7ce7)
 
 *Spillet giver en hjemme skærm der giver spillerne mulighed for at vælge mellem en række udfordrende levels.*
 
 ### Gameplay Screenshot!
+![2024-06-19 at 18 28 18](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/f66fca0f-5c36-487c-afaa-d0e0becc7c1d)
 
-[2024-06-19 at 18 28 18](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/f66fca0f-5c36-487c-afaa-d0e0becc7c1d)
 *Her ser vi de grundlæggende Breakout-spiloplevelse der viser paddle boldens og blokkene som spillerne skal ødelægge for at komme videre til de næste niveauer.*
 
 ### Power Ups!
+![2024-06-19 at 18 35 23](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/6749b8dc-88c1-4e20-8d38-964ed6bda0f2)
 
-[2024-06-19 at 18 35 23](https://github.com/hamidpaykar/BreakoutGame/assets/95886258/6749b8dc-88c1-4e20-8d38-964ed6bda0f2)
 *Spillet inkluderer forskellige power-ups der forbedrer gameplay ved at give midlertidige fordele.*
 
 
