@@ -18,59 +18,67 @@ using System;
 using System.IO;
 using DIKUArcade.Physics;
 
-namespace BreakoutTests;
-
-//for the test to work a the Asset folder is copied into GalagaTest and copied again into a folder Galaga
-//which is pased into Galagatests
-public class TestsPlayer
+namespace BreakoutTests
 {
-    public Player player;
-    [SetUp]
-    public void Setup()
+
+    // Setting up the test fixture for the Player class tests
+    public class TestsPlayer
     {
-        var windowArgs = new WindowArgs()
+        public Player player; // Declaring a public Player object
+
+        // Method to set up any required objects or state before each test
+        [SetUp]
+        public void Setup()
         {
-            Title = "Breakout v0.1"
-        };
+            var windowArgs = new WindowArgs()
+            {
+                Title = "Breakout v0.1"
+            };
 
-        var game = new Game(windowArgs, false);
-        player = new Player(
-            new DynamicShape(new Vec2F(0.1f, 0.1f), new Vec2F(0.1f, 0.1f)),
-            new Image(Path.Combine("Assets", "Images", "player.png")));
-    }
+            var game = new Game(windowArgs, false); // Creating a new game instance
 
-    [Test]
-    //doing all test in 1 function, as it becomes problematic as many windows are opened resulting in a crash
-    public void test1()
-    {
-        //TODO: Implement player tests
-        Vec2F pos1 = player.GetPosition();
-        player.SetMoveLeft(true);
-        player.Move();
+            // Initializing the player with a specific position and image
+            player = new Player(
+                new DynamicShape(new Vec2F(0.1f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                new Image(Path.Combine("Assets", "Images", "player.png")));
+        }
 
-        Vec2F pos2 = player.GetPosition();
-        player.SetMoveLeft(false);
-        player.Move();
+        // Test method to check the player's movement
+        [Test]
+        public void test1()
+        {
+            // Store the initial position of the player
+            Vec2F pos1 = player.GetPosition();
 
-        Vec2F pos3 = player.GetPosition();
+            // Move the player to the left
+            player.SetMoveLeft(true);
+            player.Move();
+            Vec2F pos2 = player.GetPosition();
 
-        player.SetMoveRight(true);
-        player.Move();
+            // Stop moving the player
+            player.SetMoveLeft(false);
+            player.Move();
+            Vec2F pos3 = player.GetPosition();
 
-        Vec2F pos4 = player.GetPosition();
-        player.SetMoveRight(false);
-        player.Move();
+            // Move the player to the right
+            player.SetMoveRight(true);
+            player.Move();
+            Vec2F pos4 = player.GetPosition();
 
-        Vec2F pos5 = player.GetPosition();
-        //First testing if setting move left to true, moves the player to the left
-        //Second testing if setting moveLeft to false stops it from moving
-        //Third test, same as first, but with moveRight
-        //fourth test same as second but with moveRight
-        //fifth testing if y stays the same
+            // Stop moving the player
+            player.SetMoveRight(false);
+            player.Move();
+            Vec2F pos5 = player.GetPosition();
 
-        //These test test direction at the same time as dynamicShapes move function uses the direction to move.
-        //SO if the direction function works, the positions should be correct. 
-        Assert.True(pos2.X < pos1.X & pos3.X == pos2.X & pos3.X < pos4.X & pos4.X == pos5.X & pos1.Y == pos5.Y);
+            // First test: Check if setting move left to true moves the player to the left
+            // Second test: Check if setting move left to false stops the player from moving
+            // Third test: Same as first, but with move right
+            // Fourth test: Same as second, but with move right
+            // Fifth test: Check if the y-coordinate stays the same
 
+            // These tests also check the direction, as DynamicShape's move function uses the direction to move.
+            // So if the direction function works, the positions should be correct.
+            Assert.True(pos2.X < pos1.X & pos3.X == pos2.X & pos3.X < pos4.X & pos4.X == pos5.X & pos1.Y == pos5.Y);
+        }
     }
 }

@@ -16,15 +16,27 @@ namespace Breakout.States
     /// </summary>
     public class GamePaused : IGameState
     {
+        // Static instance of GamePaused
         private static GamePaused instance = null;
+
+        // Background image for the paused state
         private Entity backGroundImage = new Entity(new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)), new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png")));
+
+        // Menu text for the paused state
         private string[] menuText = { "Resume", "Main menu" };
 
-        private Text[] menuButtons = {new Text("Resume", new Vec2F(0.44f, 0.25f), new Vec2F(0.2f, 0.2f)), new Text("Main Menu", new Vec2F(0.44f, 0.35f), new Vec2F(0.2f, 0.2f))};
+        // Menu buttons for the paused state
+        private Text[] menuButtons = { new Text("Resume", new Vec2F(0.44f, 0.25f), new Vec2F(0.2f, 0.2f)), new Text("Main Menu", new Vec2F(0.44f, 0.35f), new Vec2F(0.2f, 0.2f)) };
+
+        // Active menu button index
         private int activeMenuButton = 0;
+
+        // Maximum number of menu buttons
         private int maxMenuButtons;
 
-        private GamePaused(){
+        // Private constructor for GamePaused
+        private GamePaused()
+        {
             maxMenuButtons = menuButtons.Length - 1;
         }
 
@@ -33,16 +45,20 @@ namespace Breakout.States
         /// </summary>
         public static GamePaused GetInstance()
         {
+            // If instance is null, create a new instance
             if (GamePaused.instance == null)
             {
                 GamePaused.instance = new GamePaused();
                 GamePaused.instance.ResetState();
             }
+            // Return the instance
             return GamePaused.instance;
         }
-        public void ResetState() 
-        {
 
+        // Reset the state
+        public void ResetState()
+        {
+            // No implementation
         }
 
         /// <summary>
@@ -50,8 +66,10 @@ namespace Breakout.States
         /// </summary>
         public void UpdateState()
         {
+            // Update menu buttons
             for (int i = 0; i < menuButtons.Length; i++)
             {
+                // If the button is active, add an arrow to the text
                 if (i == activeMenuButton)
                 {
                     menuButtons[i].SetText(menuText[i] + " ⬅︎ ");
@@ -69,11 +87,14 @@ namespace Breakout.States
         /// </summary>
         public void RenderState()
         {
+            // Render the background image
             backGroundImage.RenderEntity();
 
+            // Render each menu button
             foreach (var button in menuButtons)
             {
-                button.SetColor(new Vec3I(255, 255, 255)); // Set text color to white
+                // Set the text color to white
+                button.SetColor(new Vec3I(255, 255, 255));
                 button.RenderText();
             }
         }
@@ -85,41 +106,50 @@ namespace Breakout.States
         /// <param name="key">Enumeration representing the keyboard key.</param>
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
         {
+            // If a key is pressed
             if (action == KeyboardAction.KeyPress)
             {
+                // Handle different key presses
                 switch (key)
                 {
                     case KeyboardKey.Up:
+                        // If the active button is not the first, move up
                         if (activeMenuButton > 0)
                         {
                             activeMenuButton--;
                         }
+                        // If the active button is the first, move to the last button
                         else
                         {
                             activeMenuButton = maxMenuButtons;
                         }
                         break;
                     case KeyboardKey.Down:
+                        // If the active button is not the last, move down
                         if (activeMenuButton < maxMenuButtons)
                         {
                             activeMenuButton++;
                         }
+                        // If the active button is the last, move to the first button
                         else
                         {
                             activeMenuButton = 0;
                         }
                         break;
                     case KeyboardKey.Enter:
+                        // Execute the active menu action
                         ExecuteMenuAction();
                         break;
                 }
             }
+            // Update the state
             UpdateState();
         }
 
 
         private void ExecuteMenuAction()
         {
+            // If the active button is the first, change state to GAME_RUNNING
             if (activeMenuButton == 0)
             {
                 BreakoutBus.GetBus().RegisterEvent(
@@ -132,6 +162,7 @@ namespace Breakout.States
                     }
                 );
             }
+            // If the active button is the second, change state to MAIN_MENU
             else if (activeMenuButton == 1)
             {
                 BreakoutBus.GetBus().RegisterEvent(

@@ -1,35 +1,55 @@
 using DIKUArcade.Events;
 
-namespace Breakout.Scores {
+namespace Breakout.Scores
+{
     /// <summary>
-    /// Stores the score uptained by playing across levels. 
+    /// Stores the score obtained by playing across levels. 
     /// </summary>
-    public static class Score {
-        private static int score = 0;
-        private static bool isWin = false;
-        
-        public static int Points{
-            get {return score;}
+    public static class Score
+    {
+        private static int score = 0; // Variable to hold the current score
+        private static bool isWin = false; // Variable to hold the win status
+
+        // Property to get the current score
+        public static int Points
+        {
+            get { return score; }
         }
 
-        public static bool IsWin{
-            get {return isWin;}
+        // Property to get the current win status
+        public static bool IsWin
+        {
+            get { return isWin; }
         }
-        public static int GetScore() {
+
+        // Method to get the current score
+        public static int GetScore()
+        {
             return score;
         }
-        public static void increaseScore(int value){
+
+        // Method to increase the score by a specified value
+        public static void increaseScore(int value)
+        {
             score += value;
         }
-        public static void reset(){
+
+        // Method to reset the score to zero
+        public static void reset()
+        {
             score = 0;
         }
-        public static void resetWin(){
+
+        // Method to reset the win status to false
+        public static void resetWin()
+        {
             isWin = false;
         }
-        public static void setWin(){
+
+        // Method to set the win status to true
+        public static void setWin()
+        {
             isWin = true;
         }
-
     }
 }

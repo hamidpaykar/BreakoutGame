@@ -8,6 +8,7 @@ using System.IO;
 using DIKUArcade.State;
 using DIKUArcade.Events;
 using Breakout.Levels;
+
 namespace Breakout.States
 {
     /// <summary>
@@ -16,18 +17,22 @@ namespace Breakout.States
     /// </summary>
     public class MainMenu : IGameState
     {
-        private static MainMenu instance = null;
-        private Entity backGroundImage = new Entity(new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)), new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png")));
-        private string[] menuText = { "New game", "Quit", "Current level"};
-        private int currentlevel = 1;
+        private static MainMenu instance = null; // Singleton instance of MainMenu state
+        private Entity backGroundImage = new Entity(new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)), new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png"))); // Background image
+        private string[] menuText = { "New game", "Quit", "Current level" }; // Menu options text
+        private int currentlevel = 1; // Current level
         private int maxLevel;
-        private Text[] menuButtons = {new Text("New game", new Vec2F(0.44f, 0.25f), new Vec2F(0.2f, 0.2f)), new Text("Quit", new Vec2F(0.44f, 0.35f), new Vec2F(0.2f, 0.2f)), new Text("Level", new Vec2F(0.44f, 0.45f), new Vec2F(0.2f, 0.2f))};
-        private int activeMenuButton = 0;
-        private int maxMenuButtons;
+        private Text[] menuButtons = {
+            new Text("New game", new Vec2F(0.44f, 0.25f), new Vec2F(0.2f, 0.2f)),
+            new Text("Quit", new Vec2F(0.44f, 0.35f), new Vec2F(0.2f, 0.2f)),
+            new Text("Level", new Vec2F(0.44f, 0.45f), new Vec2F(0.2f, 0.2f))
+        }; // Menu buttons text
+        private int activeMenuButton = 0; // Index of the currently active menu button
+        private int maxMenuButtons; // Maximum number of menu buttons
 
-        private MainMenu(){
+        private MainMenu()
+        {
             maxMenuButtons = menuButtons.Length - 1;
-
         }
 
         public static MainMenu GetInstance()
@@ -39,9 +44,9 @@ namespace Breakout.States
             }
             return MainMenu.instance;
         }
-        public void ResetState() 
-        {
 
+        public void ResetState()
+        {
         }
 
         /// <summary>
@@ -49,9 +54,7 @@ namespace Breakout.States
         /// </summary>
         public void UpdateState()
         {
-
         }
-
 
         /// <summary>
         /// Render all entities in this GameState
@@ -64,7 +67,6 @@ namespace Breakout.States
             menuButtons[2].RenderText();
             for (int i = 0; i < menuButtons.Length; i++)
             {
-                
                 if (i == activeMenuButton)
                 {
                     menuButtons[i].SetColor(new Vec3I(255, 255, 0));
@@ -116,13 +118,10 @@ namespace Breakout.States
             UpdateState();
         }
 
-
         private void ExecuteMenuAction()
         {
             if (activeMenuButton == 0)
             {
-                //LevelHolder.removeLevel(currentlevel);
-                //int level = currentlevel;
                 BreakoutBus.GetBus().RegisterEvent(
                     new GameEvent
                     {
@@ -143,9 +142,11 @@ namespace Breakout.States
                     }
                 );
             }
-            else if(activeMenuButton == 2){
+            else if (activeMenuButton == 2)
+            {
                 currentlevel++;
-                if(currentlevel > LevelHolder.TotalLevels){
+                if (currentlevel > LevelHolder.TotalLevels)
+                {
                     currentlevel = 1;
                 }
             }
